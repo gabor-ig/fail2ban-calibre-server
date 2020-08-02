@@ -1,0 +1,24 @@
+[Unit]
+Description=calibre content server
+After=network.target
+
+[Service]
+Type=simple
+User=calibre
+Group=calibre
+ExecStart=/opt/calibre/calibre-server \
+--port=8180 \
+--listen-on 127.0.0.1 \
+--access-log /var/log/calibre/access.log \
+--userdb /your/calibre/users.sqlite \
+--enable-auth \
+--auth-mode=basic \
+--ssl-certfile /your/ssl/cert.pem  \
+--ssl-keyfile /your/ssl/privkey.pem \
+--enable-local-write \
+/your/calibre/library
+#access log needed for calibre-server fail2ban jail. 
+#change these settings to your calibre library, userdb and cert/key files.
+
+[Install]
+WantedBy=multi-user.target
